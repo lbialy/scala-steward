@@ -21,11 +21,11 @@ val moduleCrossPlatformMatrix: Map[String, List[Platform]] = Map(
 )
 
 val Scala213 = "2.13.16"
-val Scala3 = "3.3.4"
+val Scala3 = "3.6.2"
 
 /// sbt-typelevel configuration
 
-ThisBuild / crossScalaVersions := Seq(Scala213, Scala3)
+ThisBuild / crossScalaVersions := Seq(Scala3)
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(
   RefPredicate.Equals(Ref.Branch(mainBranch)),
@@ -120,7 +120,8 @@ lazy val core = myCrossProject("core")
   .enablePlugins(BuildInfoPlugin, JavaAppPackaging, DockerPlugin)
   .settings(dockerSettings)
   .settings(
-    crossScalaVersions := Seq(Scala213, Scala3),
+    scalaVersion := Scala3,
+    crossScalaVersions := Seq(Scala3),
     libraryDependencies ++= Seq(
       Dependencies.bcprovJdk15to18,
       Dependencies.betterFiles,
