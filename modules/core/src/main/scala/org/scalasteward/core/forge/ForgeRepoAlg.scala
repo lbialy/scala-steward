@@ -26,7 +26,7 @@ import org.scalasteward.core.git.{updateBranchPrefix, Branch, GitAlg}
 import org.scalasteward.core.util.logger.*
 import org.typelevel.log4cats.Logger
 
-final class ForgeRepoAlg[F[_]](config: Config)(implicit
+final class ForgeRepoAlg[F[_]](config: Config)(using
     gitAlg: GitAlg[F],
     forgeAuthAlg: ForgeAuthAlg[F],
     logger: Logger[F],

@@ -58,7 +58,7 @@ object process {
       timeout: FiniteDuration,
       maxBufferSize: Int,
       log: String => F[Unit]
-  )(implicit F: Async[F]): F[List[String]] =
+  )(using F: Async[F]): F[List[String]] =
     createProcess(args).flatMap { process =>
       F.delay(new ListBuffer[String]).flatMap { buffer =>
         val raiseError = F.raiseError[List[String]]
@@ -89,7 +89,7 @@ object process {
   def showCmd(args: Args): String =
     (args.extraEnv.map { case (k, v) => s"$k=$v" } ++ args.command.toList).mkString_(" ")
 
-  private def createProcessBuilder[F[_]](args: Args)(implicit F: Sync[F]): F[ProcessBuilder] =
+  private def createProcessBuilder[F[_]](args: Args)(using F: Sync[F]): F[ProcessBuilder] =
     F.blocking {
       val pb = new ProcessBuilder(args.command.toList*)
       args.workingDirectory.foreach(file => pb.directory(file.toJava))
@@ -100,7 +100,7 @@ object process {
       pb
     }
 
-  private def createProcess[F[_]](args: Args)(implicit F: Sync[F]): F[Process] =
+  private def createProcess[F[_]](args: Args)(using F: Sync[F]): F[Process] =
     createProcessBuilder(args).flatMap { pb =>
       F.blocking {
         val p = pb.start()
@@ -121,7 +121,7 @@ object process {
       buffer: ListBuffer[String],
       maxBufferSize: Int,
       log: String => F[Unit]
-  )(implicit F: Sync[F]): F[Boolean] =
+  )(using F: Sync[F]): F[Boolean] =
     readUtf8Lines[F](is, maxBufferSize)
       .evalMap(line => log(line).as(appendBounded(buffer, line, maxBufferSize)))
       .compile
@@ -130,7 +130,7 @@ object process {
   private def readUtf8Lines[F[_]](
       is: InputStream,
       maxBufferSize: Int
-  )(implicit F: Sync[F]): Stream[F, String] =
+  )(using F: Sync[F]): Stream[F, String] =
     fs2.io
       .readInputStream(F.pure(is), chunkSize = 8192)
       .through(fs2.text.utf8.decode)

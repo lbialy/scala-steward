@@ -16,7 +16,7 @@
 
 package org.scalasteward.core.repoconfig
 
-import cats.implicits.*
+import cats.implicits.{*, given}
 import cats.{Eq, Monoid}
 import eu.timepit.refined.types.numeric.NonNegInt
 import io.circe.generic.semiauto.deriveCodec

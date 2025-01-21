@@ -31,7 +31,7 @@ object Json {
   case class Page[A](values: List[A])
 
   case class Repo(slug: String, links: Links) {
-    def cloneUrlOrRaise[F[_]](implicit F: ApplicativeThrow[F]): F[Uri] =
+    def cloneUrlOrRaise[F[_]](using F: ApplicativeThrow[F]): F[Uri] =
       links
         .get("clone")
         .flatMap(_.find(_.name.contains("http")).map(_.href))

@@ -27,7 +27,7 @@ import org.scalasteward.core.git.GitAlg
 import org.scalasteward.core.repoconfig.RepoConfigAlg
 import org.typelevel.log4cats.Logger
 
-final class RepoCacheAlg[F[_]](config: Config)(implicit
+final class RepoCacheAlg[F[_]](config: Config)(using
     buildToolDispatcher: BuildToolDispatcher[F],
     forgeApiAlg: ForgeApiAlg[F],
     forgeRepoAlg: ForgeRepoAlg[F],

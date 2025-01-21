@@ -45,7 +45,7 @@ trait ForgeApiAlg[F[_]] {
   final def createForkOrGetRepo(repo: Repo, doNotFork: Boolean): F[RepoOut] =
     if (doNotFork) getRepo(repo) else createFork(repo)
 
-  final def createForkOrGetRepoWithBranch(repo: Repo, doNotFork: Boolean)(implicit
+  final def createForkOrGetRepoWithBranch(repo: Repo, doNotFork: Boolean)(using
       F: MonadThrow[F]
   ): F[(RepoOut, BranchOut)] =
     for {
@@ -54,12 +54,12 @@ trait ForgeApiAlg[F[_]] {
       defaultBranch <- getDefaultBranchOfParentOrRepo(forkOrRepoWithDefaultBranch, doNotFork)
     } yield (forkOrRepoWithDefaultBranch, defaultBranch)
 
-  final def getDefaultBranchOfParentOrRepo(repoOut: RepoOut, doNotFork: Boolean)(implicit
+  final def getDefaultBranchOfParentOrRepo(repoOut: RepoOut, doNotFork: Boolean)(using
       F: MonadThrow[F]
   ): F[BranchOut] =
     parentOrRepo(repoOut, doNotFork).flatMap(getDefaultBranch)
 
-  final def parentOrRepo(repoOut: RepoOut, doNotFork: Boolean)(implicit
+  final def parentOrRepo(repoOut: RepoOut, doNotFork: Boolean)(using
       F: ApplicativeThrow[F]
   ): F[RepoOut] =
     if (doNotFork) F.pure(repoOut) else repoOut.parentOrRaise[F]

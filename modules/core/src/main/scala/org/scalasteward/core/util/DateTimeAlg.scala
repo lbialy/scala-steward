@@ -25,10 +25,10 @@ import scala.concurrent.duration.FiniteDuration
 trait DateTimeAlg[F[_]] {
   def currentTimeMillis: F[Long]
 
-  final def currentTimestamp(implicit F: Functor[F]): F[Timestamp] =
+  final def currentTimestamp(using F: Functor[F]): F[Timestamp] =
     currentTimeMillis.map(Timestamp.apply)
 
-  final def timed[A](fa: F[A])(implicit F: Monad[F]): F[(A, FiniteDuration)] =
+  final def timed[A](fa: F[A])(using F: Monad[F]): F[(A, FiniteDuration)] =
     for {
       start <- currentTimeMillis
       a <- fa
@@ -38,7 +38,7 @@ trait DateTimeAlg[F[_]] {
 }
 
 object DateTimeAlg {
-  def create[F[_]](implicit F: Sync[F]): DateTimeAlg[F] =
+  def create[F[_]](using F: Sync[F]): DateTimeAlg[F] =
     new DateTimeAlg[F] {
       override def currentTimeMillis: F[Long] =
         F.delay(System.currentTimeMillis())

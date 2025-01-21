@@ -27,7 +27,7 @@ import org.scalasteward.core.update.artifact.{ArtifactChange, ArtifactMigrations
 import org.scalasteward.core.util.Nel
 import scala.concurrent.duration.FiniteDuration
 
-final class UpdateAlg[F[_]](implicit
+final class UpdateAlg[F[_]](using
     artifactMigrationsFinder: ArtifactMigrationsFinder,
     filterAlg: FilterAlg[F],
     parallel: Parallel[F],

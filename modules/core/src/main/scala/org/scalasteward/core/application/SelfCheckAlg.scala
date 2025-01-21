@@ -27,7 +27,7 @@ import org.scalasteward.core.util.UrlChecker
 import org.scalasteward.core.util.logger.LoggerOps
 import org.typelevel.log4cats.Logger
 
-final class SelfCheckAlg[F[_]](config: Config)(implicit
+final class SelfCheckAlg[F[_]](config: Config)(using
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],
     logger: Logger[F],

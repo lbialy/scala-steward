@@ -27,7 +27,7 @@ import org.scalasteward.core.repoconfig.RepoConfig
 import org.scalasteward.core.util.Nel
 
 /** Scans all files that Scala Steward is allowed to edit for version and module positions. */
-final class ScannerAlg[F[_]](implicit
+final class ScannerAlg[F[_]](using
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],
     workspaceAlg: WorkspaceAlg[F],

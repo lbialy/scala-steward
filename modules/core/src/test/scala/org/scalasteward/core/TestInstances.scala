@@ -27,14 +27,14 @@ object TestInstances {
   implicit val ioLogger: Logger[IO] =
     Slf4jLogger.getLogger[IO]
 
-  implicit def scopeArbitrary[T](implicit arbT: Arbitrary[T]): Arbitrary[Scope[T]] =
+  implicit def scopeArbitrary[T](using arbT: Arbitrary[T]): Arbitrary[Scope[T]] =
     Arbitrary(
       arbT.arbitrary.flatMap { t =>
         Gen.oneOf(Scope(t, List.empty), Scope(t, List(Resolver.mavenCentral)))
       }
     )
 
-  implicit def scopeCogen[T](implicit cogenT: Cogen[T]): Cogen[Scope[T]] =
+  implicit def scopeCogen[T](using cogenT: Cogen[T]): Cogen[Scope[T]] =
     cogenT.contramap(_.value)
 
   implicit val updateArbitrary: Arbitrary[Update.Single] =

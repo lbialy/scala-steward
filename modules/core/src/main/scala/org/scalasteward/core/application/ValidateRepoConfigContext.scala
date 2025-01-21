@@ -23,19 +23,19 @@ import org.scalasteward.core.repoconfig.ValidateRepoConfigAlg
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
-final class ValidateRepoConfigContext[F[_]](implicit
+final class ValidateRepoConfigContext[F[_]](using
     val validateRepoConfigAlg: ValidateRepoConfigAlg[F]
 )
 
 object ValidateRepoConfigContext {
-  def step0[F[_]](implicit F: Sync[F]): F[ValidateRepoConfigContext[F]] =
+  def step0[F[_]](using F: Sync[F]): F[ValidateRepoConfigContext[F]] =
     for {
       logger <- Slf4jLogger.fromName[F]("org.scalasteward.core")
-      fileAlg = FileAlg.create(logger, F)
-      context = step1(fileAlg, logger, F)
+      fileAlg = FileAlg.create(using logger, F)
+      context = step1(using fileAlg, logger, F)
     } yield context
 
-  def step1[F[_]](implicit
+  def step1[F[_]](using
       fileAlg: FileAlg[F],
       logger: Logger[F],
       F: Sync[F]

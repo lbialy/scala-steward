@@ -35,7 +35,7 @@ trait ForgeAuthAlg[F[_]] {
 }
 
 object ForgeAuthAlg {
-  def create[F[_]](config: Config)(implicit
+  def create[F[_]](config: Config)(using
       F: Sync[F],
       client: HttpJsonClient[F],
       workspaceAlg: WorkspaceAlg[F],

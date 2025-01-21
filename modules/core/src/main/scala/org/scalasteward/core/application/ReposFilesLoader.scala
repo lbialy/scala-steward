@@ -25,7 +25,7 @@ import org.scalasteward.core.io.FileAlg
 import org.scalasteward.core.util.Nel
 import org.typelevel.log4cats.Logger
 
-final class ReposFilesLoader[F[_]](implicit
+final class ReposFilesLoader[F[_]](using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     F: Sync[F]

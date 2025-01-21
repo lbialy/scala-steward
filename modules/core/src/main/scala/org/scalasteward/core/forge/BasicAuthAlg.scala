@@ -27,7 +27,7 @@ import org.scalasteward.core.io.{ProcessAlg, WorkspaceAlg}
 import org.scalasteward.core.util
 import org.scalasteward.core.util.Nel
 
-class BasicAuthAlg[F[_]](apiUri: Uri, login: String, gitAskPass: File)(implicit
+class BasicAuthAlg[F[_]](apiUri: Uri, login: String, gitAskPass: File)(using
     F: Sync[F],
     workspaceAlg: WorkspaceAlg[F],
     processAlg: ProcessAlg[F]

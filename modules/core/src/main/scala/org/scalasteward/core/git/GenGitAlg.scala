@@ -86,10 +86,10 @@ trait GenGitAlg[F[_], Repo] {
       F.pure(None)
     )
 
-  final def returnToCurrentBranch[A, E](repo: Repo)(fa: F[A])(implicit F: MonadCancel[F, E]): F[A] =
+  final def returnToCurrentBranch[A, E](repo: Repo)(fa: F[A])(using F: MonadCancel[F, E]): F[A] =
     F.bracket(currentBranch(repo))(_ => fa)(checkoutBranch(repo, _))
 
-  final def contramapRepoF[A](f: A => F[Repo])(implicit F: FlatMap[F]): GenGitAlg[F, A] = {
+  final def contramapRepoF[A](f: A => F[Repo])(using F: FlatMap[F]): GenGitAlg[F, A] = {
     val self = this
     new GenGitAlg[F, A] {
       override def add(repo: A, file: String): F[Unit] =
@@ -178,7 +178,7 @@ trait GenGitAlg[F[_], Repo] {
 }
 
 object GenGitAlg {
-  def create[F[_]](config: Config)(implicit
+  def create[F[_]](config: Config)(using
       fileAlg: FileAlg[F],
       processAlg: ProcessAlg[F],
       workspaceAlg: WorkspaceAlg[F],

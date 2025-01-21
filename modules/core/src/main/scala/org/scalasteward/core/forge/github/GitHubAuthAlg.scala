@@ -18,7 +18,7 @@ package org.scalasteward.core.forge.github
 
 import better.files.File
 import cats.effect.Sync
-import cats.implicits.*
+import cats.implicits.{*, given}
 import io.jsonwebtoken.Jwts
 import java.io.FileReader
 import java.security.spec.PKCS8EncodedKeySpec
@@ -43,7 +43,7 @@ final class GitHubAuthAlg[F[_]](
     apiUri: Uri,
     appId: Long,
     appKeyFile: File
-)(implicit F: Sync[F], client: HttpJsonClient[F], logger: Logger[F])
+)(using F: Sync[F], client: HttpJsonClient[F], logger: Logger[F])
     extends ForgeAuthAlg[F] {
   private val tokenTtl = 2.minutes
 

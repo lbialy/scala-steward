@@ -161,7 +161,7 @@ final class GitLabApiAlg[F[_]: Parallel](
     forgeCfg: ForgeCfg,
     gitLabCfg: GitLabCfg,
     modify: Request[F] => F[Request[F]]
-)(implicit
+)(using
     client: HttpJsonClient[F],
     logger: Logger[F],
     F: Temporal[F]

@@ -25,7 +25,7 @@ import org.scalasteward.core.io.{FileAlg, WorkspaceAlg}
 import org.scalasteward.core.repoconfig.RepoConfigAlg.*
 import org.typelevel.log4cats.Logger
 
-final class RepoConfigAlg[F[_]](maybeGlobalRepoConfig: Option[RepoConfig])(implicit
+final class RepoConfigAlg[F[_]](maybeGlobalRepoConfig: Option[RepoConfig])(using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     workspaceAlg: WorkspaceAlg[F],
@@ -85,7 +85,7 @@ object RepoConfigAlg {
 
   private def activeConfigFile[F[_]](
       repoDir: File
-  )(implicit fileAlg: FileAlg[F], logger: Logger[F], F: Monad[F]): F[Option[File]] = {
+  )(using fileAlg: FileAlg[F], logger: Logger[F], F: Monad[F]): F[Option[File]] = {
     val configFileCandidates: F[List[File]] = (repoConfigFileSearchPath
       .map(_ :+ repoConfigBasename) ++
       repoConfigFileSearchPath
@@ -106,7 +106,7 @@ object RepoConfigAlg {
 
   def readRepoConfigFromFile[F[_]](
       configFile: File
-  )(implicit fileAlg: FileAlg[F], F: Functor[F]): F[ConfigParsingResult] =
+  )(using fileAlg: FileAlg[F], F: Functor[F]): F[ConfigParsingResult] =
     fileAlg.readFile(configFile).map {
       case None => ConfigParsingResult.FileDoesNotExist
       case Some(content) =>

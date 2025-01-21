@@ -31,7 +31,7 @@ import org.scalasteward.core.util.DateTimeAlg
 import org.scalasteward.core.util.logger.LoggerOps
 import org.typelevel.log4cats.Logger
 
-final class StewardAlg[F[_]](config: Config)(implicit
+final class StewardAlg[F[_]](config: Config)(using
     dateTimeAlg: DateTimeAlg[F],
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],

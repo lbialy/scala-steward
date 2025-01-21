@@ -25,7 +25,7 @@ import org.scalasteward.core.edit.scalafix.ScalafixMigrationsLoader.*
 import org.scalasteward.core.io.FileAlg
 import org.typelevel.log4cats.Logger
 
-final class ScalafixMigrationsLoader[F[_]](implicit
+final class ScalafixMigrationsLoader[F[_]](using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     F: MonadThrow[F]

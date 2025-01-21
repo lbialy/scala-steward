@@ -28,7 +28,7 @@ import org.scalasteward.core.nurture.UpdateInfoUrl.*
 import org.scalasteward.core.nurture.UpdateInfoUrlFinder.possibleUpdateInfoUrls
 import org.scalasteward.core.util.UrlChecker
 
-final class UpdateInfoUrlFinder[F[_]](implicit
+final class UpdateInfoUrlFinder[F[_]](using
     config: ForgeCfg,
     urlChecker: UrlChecker[F],
     F: Monad[F]

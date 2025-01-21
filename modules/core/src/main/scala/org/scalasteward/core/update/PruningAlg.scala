@@ -17,7 +17,7 @@
 package org.scalasteward.core.update
 
 import cats.Monad
-import cats.implicits.*
+import cats.implicits.{*, given}
 import org.scalasteward.core.data.*
 import org.scalasteward.core.nurture.PullRequestRepository
 import org.scalasteward.core.repocache.RepoCache
@@ -30,7 +30,7 @@ import org.scalasteward.core.util.{dateTime, DateTimeAlg, Nel, Timestamp}
 import org.typelevel.log4cats.Logger
 import scala.concurrent.duration.*
 
-final class PruningAlg[F[_]](implicit
+final class PruningAlg[F[_]](using
     dateTimeAlg: DateTimeAlg[F],
     logger: Logger[F],
     pullRequestRepository: PullRequestRepository[F],

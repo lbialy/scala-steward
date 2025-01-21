@@ -35,7 +35,7 @@ object ForgeSelection {
       forgeCfg: ForgeCfg,
       forgeSpecificCfg: ForgeSpecificCfg,
       auth: Request[F] => F[Request[F]]
-  )(implicit
+  )(using
       httpJsonClient: HttpJsonClient[F],
       logger: Logger[F],
       F: Temporal[F]

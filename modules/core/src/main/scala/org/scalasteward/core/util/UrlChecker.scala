@@ -33,7 +33,7 @@ trait UrlChecker[F[_]] {
 final case class UrlCheckerClient[F[_]](client: Client[F]) extends AnyVal
 
 object UrlChecker {
-  private def buildCache[F[_]](config: Config)(implicit
+  private def buildCache[F[_]](config: Config)(using
       F: Sync[F]
   ): F[CaffeineCache[F, String, Status]] =
     F.delay {
@@ -45,7 +45,7 @@ object UrlChecker {
       CaffeineCache(cache)
     }
 
-  def create[F[_]](config: Config, modify: Request[F] => F[Request[F]])(implicit
+  def create[F[_]](config: Config, modify: Request[F] => F[Request[F]])(using
       urlCheckerClient: UrlCheckerClient[F],
       logger: Logger[F],
       F: Sync[F]

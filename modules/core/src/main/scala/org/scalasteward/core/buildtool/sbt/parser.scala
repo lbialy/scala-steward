@@ -16,7 +16,7 @@
 
 package org.scalasteward.core.buildtool.sbt
 
-import cats.implicits.*
+import cats.implicits.{*, given}
 import io.circe.Decoder
 import io.circe.parser.*
 import org.scalasteward.core.data.*

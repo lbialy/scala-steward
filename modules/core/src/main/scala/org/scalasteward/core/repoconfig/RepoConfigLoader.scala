@@ -24,7 +24,7 @@ import org.scalasteward.core.io.FileAlg
 import org.scalasteward.core.repoconfig.RepoConfigLoader.defaultRepoConfigUrl
 import org.typelevel.log4cats.Logger
 
-final class RepoConfigLoader[F[_]](implicit
+final class RepoConfigLoader[F[_]](using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     F: MonadThrow[F]

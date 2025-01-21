@@ -28,6 +28,6 @@ package object mock {
       runA(MockState.empty).unsafeRunSync()(cats.effect.unsafe.implicits.global)
   }
 
-  def getFlatMapSet[F[_], A](f: A => F[A])(ref: Ref[F, A])(implicit F: FlatMap[F]): F[Unit] =
+  def getFlatMapSet[F[_], A](f: A => F[A])(ref: Ref[F, A])(using F: FlatMap[F]): F[Unit] =
     ref.get.flatMap(f).flatMap(ref.set)
 }

@@ -17,7 +17,7 @@
 package org.scalasteward.core.data
 
 import cats.Order
-import cats.implicits.*
+import cats.implicits.{*, given}
 import io.circe.{Decoder, Encoder}
 import org.scalasteward.core.repoconfig.PullRequestGroup
 import org.scalasteward.core.util

@@ -34,7 +34,7 @@ import org.scalasteward.core.util.{Nel, UrlChecker}
 import org.scalasteward.core.{git, util}
 import org.typelevel.log4cats.Logger
 
-final class NurtureAlg[F[_]](config: ForgeCfg)(implicit
+final class NurtureAlg[F[_]](config: ForgeCfg)(using
     coursierAlg: CoursierAlg[F],
     editAlg: EditAlg[F],
     forgeApiAlg: ForgeApiAlg[F],

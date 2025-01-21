@@ -24,7 +24,7 @@ import org.scalasteward.core.update.FilterAlg.*
 import org.scalasteward.core.util.Nel
 import org.typelevel.log4cats.Logger
 
-final class FilterAlg[F[_]](implicit
+final class FilterAlg[F[_]](using
     logger: Logger[F],
     F: Monad[F]
 ) {

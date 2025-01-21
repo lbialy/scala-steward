@@ -23,7 +23,7 @@ import cats.{Eq, Monad}
 final class CachingKeyValueStore[F[_], K, V](
     underlying: KeyValueStore[F, K, V],
     cache: Ref[F, Option[(K, Option[V])]]
-)(implicit kEq: Eq[K], F: Monad[F])
+)(using kEq: Eq[K], F: Monad[F])
     extends KeyValueStore[F, K, V] {
   override def get(key: K): F[Option[V]] =
     cache.get.flatMap {
@@ -40,6 +40,6 @@ final class CachingKeyValueStore[F[_], K, V](
 object CachingKeyValueStore {
   def wrap[F[_], K, V](
       underlying: KeyValueStore[F, K, V]
-  )(implicit kEq: Eq[K], F: Sync[F]): F[KeyValueStore[F, K, V]] =
+  )(using kEq: Eq[K], F: Sync[F]): F[KeyValueStore[F, K, V]] =
     Ref[F].of(Option.empty[(K, Option[V])]).map(new CachingKeyValueStore[F, K, V](underlying, _))
 }

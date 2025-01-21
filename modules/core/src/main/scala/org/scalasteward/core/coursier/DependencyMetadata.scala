@@ -37,7 +37,7 @@ final case class DependencyMetadata(
       versionScheme = versionScheme.orElse(other.versionScheme)
     )
 
-  def filterUrls[F[_]](f: Uri => F[Boolean])(implicit F: Monad[F]): F[DependencyMetadata] =
+  def filterUrls[F[_]](f: Uri => F[Boolean])(using F: Monad[F]): F[DependencyMetadata] =
     for {
       homePage <- homePage.filterA(f)
       scmUrl <- scmUrl.filterA(f)
@@ -49,7 +49,7 @@ final case class DependencyMetadata(
     urls.find(_.scheme.exists(uri.httpSchemes)).orElse(urls.headOption)
   }
 
-  def forgeRepo(implicit config: ForgeCfg): Option[ForgeRepo] =
+  def forgeRepo(using config: ForgeCfg): Option[ForgeRepo] =
     repoUrl.flatMap(ForgeRepo.fromRepoUrl)
 }
 

@@ -27,7 +27,7 @@ import org.scalasteward.core.io.process.{ProcessFailedException, SlurpOptions}
 import org.scalasteward.core.io.{FileAlg, ProcessAlg, WorkspaceAlg}
 import org.scalasteward.core.util.Nel
 
-final class FileGitAlg[F[_]](config: Config)(implicit
+final class FileGitAlg[F[_]](config: Config)(using
     fileAlg: FileAlg[F],
     processAlg: ProcessAlg[F],
     workspaceAlg: WorkspaceAlg[F],

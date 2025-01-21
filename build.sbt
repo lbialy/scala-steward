@@ -243,7 +243,11 @@ lazy val core = myCrossProject("core")
         outFile
       }
       Seq(downloadPlugin("1_0_0"), downloadPlugin("1_3_11"))
-    }.taskValue
+    }.taskValue,
+    scalacOptions ++= Seq(
+      "-Wconf:any:warning", // Treat all warnings normally
+      "-Xfatal-warnings" // Turn warnings into errors
+    )
   )
 
 lazy val docs = myCrossProject("docs")
@@ -311,7 +315,7 @@ lazy val commonSettings = Def.settings(
 )
 
 lazy val compileSettings = Def.settings(
-  scalaVersion := Scala213,
+  scalaVersion := Scala3,
   scalacOptions ++= {
     scalaBinaryVersion.value match {
       case "2.13" =>

@@ -31,7 +31,7 @@ import org.scalasteward.core.io.{FileAlg, FileData, ProcessAlg, WorkspaceAlg}
 import org.scalasteward.core.util.Nel
 import org.typelevel.log4cats.Logger
 
-final class SbtAlg[F[_]](config: Config)(implicit
+final class SbtAlg[F[_]](config: Config)(using
     fileAlg: FileAlg[F],
     override protected val logger: Logger[F],
     processAlg: ProcessAlg[F],

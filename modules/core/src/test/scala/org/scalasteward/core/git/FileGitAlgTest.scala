@@ -207,7 +207,7 @@ object FileGitAlgTest {
   private val conflictsNo: Branch = Branch("conflicts-no")
   private val conflictsYes: Branch = Branch("conflicts-yes")
 
-  final class AuxGitAlg[F[_]](implicit
+  final class AuxGitAlg[F[_]](using
       fileAlg: FileAlg[F],
       gitAlg: GenGitAlg[F, File],
       processAlg: ProcessAlg[F],

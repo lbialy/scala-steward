@@ -87,7 +87,7 @@ final class ProcessAlg[F[_]](config: ProcessCfg)(
 }
 
 object ProcessAlg {
-  def create[F[_]](config: ProcessCfg)(implicit logger: Logger[F], F: Async[F]): ProcessAlg[F] =
+  def create[F[_]](config: ProcessCfg)(using logger: Logger[F], F: Async[F]): ProcessAlg[F] =
     new ProcessAlg(config)({ args =>
       logger.debug(s"Execute ${process.showCmd(args)}") >>
         process.slurp(args, config.processTimeout, config.maxBufferSize, logger.trace(_))

@@ -16,7 +16,7 @@
 
 package org.scalasteward.core.coursier
 
-import cats.implicits.*
+import cats.implicits.{*, given}
 import cats.{MonadThrow, Parallel}
 import io.circe.generic.semiauto.deriveCodec
 import io.circe.{Codec, KeyEncoder}
@@ -29,7 +29,7 @@ import scala.concurrent.duration.FiniteDuration
 final class VersionsCache[F[_]](
     cacheTtl: FiniteDuration,
     store: KeyValueStore[F, Key, Value]
-)(implicit
+)(using
     coursierAlg: CoursierAlg[F],
     dateTimeAlg: DateTimeAlg[F],
     parallel: Parallel[F],

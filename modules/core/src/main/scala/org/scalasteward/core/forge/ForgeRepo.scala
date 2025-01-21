@@ -31,7 +31,7 @@ case class ForgeRepo(forgeType: ForgeType, repoUrl: Uri) {
 }
 
 object ForgeRepo {
-  def fromRepoUrl(repoUrl: Uri)(implicit config: ForgeCfg): Option[ForgeRepo] = for {
+  def fromRepoUrl(repoUrl: Uri)(using config: ForgeCfg): Option[ForgeRepo] = for {
     repoForgeType <- ForgeType.fromRepoUrl(repoUrl)
   } yield ForgeRepo(repoForgeType, repoUrl)
 }

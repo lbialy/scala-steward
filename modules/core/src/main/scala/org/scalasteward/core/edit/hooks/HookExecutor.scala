@@ -37,7 +37,7 @@ import org.scalasteward.core.util.Nel
 import org.scalasteward.core.util.logger.*
 import org.typelevel.log4cats.Logger
 
-final class HookExecutor[F[_]](implicit
+final class HookExecutor[F[_]](using
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],
     logger: Logger[F],

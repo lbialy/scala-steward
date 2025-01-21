@@ -1,7 +1,7 @@
 package org.scalasteward.core.client
 
 import cats.effect.*
-import cats.implicits.*
+import cats.implicits.{*, given}
 import eu.timepit.refined.types.numeric.PosInt
 import munit.CatsEffectSuite
 import org.http4s.HttpRoutes

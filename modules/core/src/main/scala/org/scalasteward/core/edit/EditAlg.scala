@@ -32,7 +32,7 @@ import org.scalasteward.core.scalafmt.{scalafmtModule, ScalafmtAlg}
 import org.scalasteward.core.util.logger.*
 import org.typelevel.log4cats.Logger
 
-final class EditAlg[F[_]](implicit
+final class EditAlg[F[_]](using
     buildToolDispatcher: BuildToolDispatcher[F],
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],

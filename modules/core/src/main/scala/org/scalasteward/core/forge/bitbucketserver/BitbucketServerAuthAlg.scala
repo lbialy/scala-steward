@@ -26,7 +26,7 @@ import org.scalasteward.core.forge.BasicAuthAlg
 import org.scalasteward.core.io.{ProcessAlg, WorkspaceAlg}
 import org.typelevel.ci.CIStringSyntax
 
-class BitbucketServerAuthAlg[F[_]](apiUri: Uri, login: String, gitAskPass: File)(implicit
+class BitbucketServerAuthAlg[F[_]](apiUri: Uri, login: String, gitAskPass: File)(using
     F: Sync[F],
     workspaceAlg: WorkspaceAlg[F],
     processAlg: ProcessAlg[F]

@@ -25,7 +25,7 @@ import org.scalasteward.core.io.FileAlg
 import org.scalasteward.core.update.artifact.ArtifactMigrationsLoader.defaultArtifactMigrationsUrl
 import org.typelevel.log4cats.Logger
 
-final class ArtifactMigrationsLoader[F[_]](implicit
+final class ArtifactMigrationsLoader[F[_]](using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     F: MonadThrow[F]

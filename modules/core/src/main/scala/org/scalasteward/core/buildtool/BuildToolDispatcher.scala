@@ -28,7 +28,7 @@ import org.scalasteward.core.repoconfig.RepoConfig
 import org.scalasteward.core.scalafmt.ScalafmtAlg
 import org.typelevel.log4cats.Logger
 
-final class BuildToolDispatcher[F[_]](implicit
+final class BuildToolDispatcher[F[_]](using
     logger: Logger[F],
     mavenAlg: MavenAlg[F],
     millAlg: MillAlg[F],

@@ -32,7 +32,7 @@ final class AzureReposApiAlg[F[_]](
     azureAPiHost: Uri,
     config: AzureReposCfg,
     modify: Request[F] => F[Request[F]]
-)(implicit client: HttpJsonClient[F], logger: Logger[F], F: MonadThrow[F])
+)(using client: HttpJsonClient[F], logger: Logger[F], F: MonadThrow[F])
     extends ForgeApiAlg[F] {
 
   private val url = new Url(azureAPiHost, config.organization.getOrElse(""))

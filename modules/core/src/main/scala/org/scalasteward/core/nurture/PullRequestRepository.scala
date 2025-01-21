@@ -16,7 +16,7 @@
 
 package org.scalasteward.core.nurture
 
-import cats.implicits.*
+import cats.implicits.{*, given}
 import cats.{Id, Monad}
 import io.circe.Codec
 import io.circe.generic.semiauto.deriveCodec
@@ -31,7 +31,7 @@ import org.scalasteward.core.repoconfig.RetractedArtifact
 import org.scalasteward.core.update.UpdateAlg
 import org.scalasteward.core.util.{DateTimeAlg, Timestamp}
 
-final class PullRequestRepository[F[_]](kvStore: KeyValueStore[F, Repo, Map[Uri, Entry]])(implicit
+final class PullRequestRepository[F[_]](kvStore: KeyValueStore[F, Repo, Map[Uri, Entry]])(using
     dateTimeAlg: DateTimeAlg[F],
     F: Monad[F]
 ) {

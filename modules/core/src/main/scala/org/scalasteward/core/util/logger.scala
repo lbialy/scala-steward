@@ -26,7 +26,7 @@ object logger {
   final class AttemptLoggerOps[F[_]](
       logger: Logger[F],
       logThrowable: (Throwable, String) => F[Unit]
-  )(implicit F: MonadThrow[F]) {
+  )(using F: MonadThrow[F]) {
     def log[A](msg: String)(fa: F[A]): F[Either[Throwable, A]] =
       fa.attempt.flatTap(_.fold(t => logThrowable(t, msg), _ => F.unit))
 
@@ -43,19 +43,19 @@ object logger {
   }
 
   implicit final class LoggerOps[F[_]](private val logger: Logger[F]) extends AnyVal {
-    def attemptWarn(implicit F: MonadThrow[F]): AttemptLoggerOps[F] =
+    def attemptWarn(using F: MonadThrow[F]): AttemptLoggerOps[F] =
       new AttemptLoggerOps(logger, logger.warn(_)(_))
 
-    def attemptError(implicit F: MonadThrow[F]): AttemptLoggerOps[F] =
+    def attemptError(using F: MonadThrow[F]): AttemptLoggerOps[F] =
       new AttemptLoggerOps(logger, logger.error(_)(_))
 
-    def infoTimed[A](msg: FiniteDuration => String)(fa: F[A])(implicit
+    def infoTimed[A](msg: FiniteDuration => String)(fa: F[A])(using
         dateTimeAlg: DateTimeAlg[F],
         F: Monad[F]
     ): F[A] =
       dateTimeAlg.timed(fa).flatMap { case (a, duration) => logger.info(msg(duration)).as(a) }
 
-    def infoTotalTime[A](label: String)(fa: F[A])(implicit
+    def infoTotalTime[A](label: String)(fa: F[A])(using
         dateTimeAlg: DateTimeAlg[F],
         F: Monad[F]
     ): F[A] = {

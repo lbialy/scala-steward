@@ -40,7 +40,7 @@ object WorkspaceAlg {
 
   val RunSummaryFileName: String = "run-summary.md"
 
-  def create[F[_]](config: Config)(implicit
+  def create[F[_]](config: Config)(using
       fileAlg: FileAlg[F],
       logger: Logger[F],
       F: Monad[F]

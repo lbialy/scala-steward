@@ -1,6 +1,6 @@
 package org.scalasteward.core.data
 
-import cats.implicits.*
+import cats.implicits.{*, given}
 import cats.kernel.laws.discipline.OrderTests
 import munit.DisciplineSuite
 import org.scalacheck.Prop.*

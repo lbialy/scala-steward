@@ -28,7 +28,7 @@ import org.scalasteward.core.scalafmt.ScalafmtAlg.{opts, parseScalafmtConf}
 import org.scalasteward.core.util.Nel
 import org.typelevel.log4cats.Logger
 
-final class ScalafmtAlg[F[_]](defaultResolver: Resolver)(implicit
+final class ScalafmtAlg[F[_]](defaultResolver: Resolver)(using
     fileAlg: FileAlg[F],
     logger: Logger[F],
     processAlg: ProcessAlg[F],

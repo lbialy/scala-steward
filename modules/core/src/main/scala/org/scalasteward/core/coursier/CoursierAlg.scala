@@ -18,7 +18,7 @@ package org.scalasteward.core.coursier
 
 import cats.Parallel
 import cats.effect.Async
-import cats.implicits.*
+import cats.implicits.{*, given}
 import coursier.cache.{CachePolicy, FileCache}
 import coursier.core.{Authentication, Project}
 import coursier.{Fetch, Module, ModuleName, Organization}
@@ -37,7 +37,7 @@ trait CoursierAlg[F[_]] {
 }
 
 object CoursierAlg {
-  def create[F[_]](implicit
+  def create[F[_]](using
       logger: Logger[F],
       parallel: Parallel[F],
       F: Async[F]

@@ -26,7 +26,7 @@ import org.scalasteward.core.io.{FileAlg, ProcessAlg, WorkspaceAlg}
 import org.scalasteward.core.util.Nel
 import org.typelevel.log4cats.Logger
 
-final class MillAlg[F[_]](defaultResolver: Resolver)(implicit
+final class MillAlg[F[_]](defaultResolver: Resolver)(using
     fileAlg: FileAlg[F],
     override protected val logger: Logger[F],
     processAlg: ProcessAlg[F],

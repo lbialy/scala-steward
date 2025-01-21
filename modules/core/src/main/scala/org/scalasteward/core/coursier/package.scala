@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutorService
 import scala.concurrent.ExecutionContext
 
 package object coursier {
-  implicit def coursierSyncFromCatsEffectSync[F[_]](implicit
+  implicit def coursierSyncFromCatsEffectSync[F[_]](using
       parallel: Parallel[F],
       F: Async[F]
   ): _root_.coursier.util.Sync[F] =

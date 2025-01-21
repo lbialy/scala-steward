@@ -136,7 +136,7 @@ object ForgeType {
   /** Attempts to guess, based on the uri host and the config used to launch Scala Steward, what
     * type of forge hosts the repo at the supplied uri.
     */
-  def fromRepoUrl(repoUrl: Uri)(implicit config: ForgeCfg): Option[ForgeType] =
+  def fromRepoUrl(repoUrl: Uri)(using config: ForgeCfg): Option[ForgeType] =
     repoUrl.host.flatMap { repoHost =>
       Option
         .when(config.apiHost.host.contains(repoHost))(config.tpe)

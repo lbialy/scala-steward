@@ -28,7 +28,7 @@ import org.http4s.client.Client
 import org.http4s.headers.{Accept, Link, MediaRangeAndQValue}
 import scala.util.control.NoStackTrace
 
-final class HttpJsonClient[F[_]](implicit
+final class HttpJsonClient[F[_]](using
     client: Client[F],
     F: Concurrent[F]
 ) {
@@ -44,7 +44,7 @@ final class HttpJsonClient[F[_]](implicit
     */
   def getAll[A: Decoder](uri: Uri, modify: ModReq): Stream[F, A] =
     Stream.unfoldLoopEval(uri) { curr =>
-      requestWithHeaders[A](GET, curr, modify)(jsonOf).map { case (a, headers) =>
+      requestWithHeaders[A](GET, curr, modify)(using jsonOf).map { case (a, headers) =>
         val next = headers.get[Link].flatMap(_.values.find(_.rel.contains("next"))).map(_.uri)
         (a, next)
       }
@@ -72,13 +72,13 @@ final class HttpJsonClient[F[_]](implicit
     patch[A](uri, modify.compose(_.withEntity(body)(jsonEncoderOf[B])))
 
   private def request[A: Decoder](method: Method, uri: Uri, modify: ModReq): F[A] =
-    requestWithHeaders[A](method, uri, modify)(jsonOf).map { case (a, _) => a }
+    requestWithHeaders[A](method, uri, modify)(using jsonOf).map { case (a, _) => a }
 
   private def request_(method: Method, uri: Uri, modify: ModReq): F[Unit] =
     requestWithHeaders[Unit](method, uri, modify).void
 
   // adapted from https://github.com/http4s/http4s/blob/c89ebc2d844c5c93dcc1307e5b9361a2c38bfd00/client/shared/src/main/scala/org/http4s/client/DefaultClient.scala#L91-L105
-  private def requestWithHeaders[A](method: Method, uri: Uri, modify: ModReq)(implicit
+  private def requestWithHeaders[A](method: Method, uri: Uri, modify: ModReq)(using
       d: EntityDecoder[F, A]
   ): F[(A, Headers)] =
     modify(Request[F](method, uri)).flatMap { req =>

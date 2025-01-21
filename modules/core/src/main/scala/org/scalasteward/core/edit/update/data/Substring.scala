@@ -42,7 +42,7 @@ object Substring {
   final case class Replacement(position: Position, replacement: String)
 
   object Replacement {
-    def applyAll[F[_]](replacements: List[Replacement])(source: String)(implicit
+    def applyAll[F[_]](replacements: List[Replacement])(source: String)(using
         F: ApplicativeThrow[F]
     ): F[String] =
       F.catchNonFatal {

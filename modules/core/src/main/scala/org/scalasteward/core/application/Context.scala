@@ -51,7 +51,7 @@ import org.scalasteward.core.util.uri.*
 import org.typelevel.log4cats.Logger
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 
-final class Context[F[_]](implicit
+final class Context[F[_]](using 
     val artifactMigrationsLoader: ArtifactMigrationsLoader[F],
     val buildToolDispatcher: BuildToolDispatcher[F],
     val coursierAlg: CoursierAlg[F],
@@ -86,7 +86,7 @@ final class Context[F[_]](implicit
 )
 
 object Context {
-  def step0[F[_]](config: Config)(implicit F: Async[F]): Resource[F, Context[F]] =
+  def step0[F[_]](config: Config)(using F: Async[F]): Resource[F, Context[F]] =
     for {
       logger <- Resource.eval(Slf4jLogger.fromName[F]("org.scalasteward.core"))
       _ <- Resource.eval(logger.info(banner))
@@ -103,11 +103,11 @@ object Context {
         ClientConfiguration.disableFollowRedirect,
         middleware
       )
-      fileAlg = FileAlg.create(logger, F)
-      processAlg = ProcessAlg.create(config.processCfg)(logger, F)
-      workspaceAlg = WorkspaceAlg.create(config)(fileAlg, logger, F)
+      fileAlg = FileAlg.create(using logger, F)
+      processAlg = ProcessAlg.create(config.processCfg)(using logger, F)
+      workspaceAlg = WorkspaceAlg.create(config)(using fileAlg, logger, F)
       context <- Resource.eval {
-        step1(config)(
+        step1(config)(using 
           defaultClient,
           UrlCheckerClient(urlCheckerClient),
           fileAlg,
@@ -119,7 +119,7 @@ object Context {
       }
     } yield context
 
-  def step1[F[_]](config: Config)(implicit
+  def step1[F[_]](config: Config)(using
       client: Client[F],
       urlCheckerClient: UrlCheckerClient[F],
       fileAlg: FileAlg[F],

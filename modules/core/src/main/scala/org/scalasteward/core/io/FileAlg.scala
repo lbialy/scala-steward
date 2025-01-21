@@ -50,7 +50,7 @@ trait FileAlg[F[_]] {
 
   def writeFile(file: File, content: String): F[Unit]
 
-  final def createTemporarily[E](file: File, content: String)(implicit
+  final def createTemporarily[E](file: File, content: String)(using
       F: ApplicativeError[F, E]
   ): Resource[F, Unit] = {
     val delete = deleteForce(file)
@@ -58,19 +58,19 @@ trait FileAlg[F[_]] {
     Resource.make(create)(_ => delete)
   }
 
-  final def createTemporarily[E](dir: File, data: FileData)(implicit
+  final def createTemporarily[E](dir: File, data: FileData)(using
       F: ApplicativeError[F, E]
   ): Resource[F, Unit] =
     createTemporarily(dir / data.path, data.content)
 
-  final def editFile(file: File, edit: String => F[String])(implicit F: MonadThrow[F]): F[Unit] =
+  final def editFile(file: File, edit: String => F[String])(using F: MonadThrow[F]): F[Unit] =
     readFile(file)
       .flatMap(_.fold(F.unit)(edit(_).flatMap(writeFile(file, _))))
       .adaptError { case t => new Throwable(s"failed to edit $file", t) }
 }
 
 object FileAlg {
-  def create[F[_]](implicit logger: Logger[F], F: Sync[F]): FileAlg[F] =
+  def create[F[_]](using logger: Logger[F], F: Sync[F]): FileAlg[F] =
     new FileAlg[F] {
       override def deleteForce(file: File): F[Unit] =
         F.blocking {

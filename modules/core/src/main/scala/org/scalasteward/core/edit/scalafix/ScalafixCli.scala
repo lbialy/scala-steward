@@ -24,7 +24,7 @@ import org.scalasteward.core.io.process.SlurpOptions
 import org.scalasteward.core.io.{ProcessAlg, WorkspaceAlg}
 import org.scalasteward.core.util.Nel
 
-final class ScalafixCli[F[_]](implicit
+final class ScalafixCli[F[_]](using
     processAlg: ProcessAlg[F],
     workspaceAlg: WorkspaceAlg[F],
     F: Monad[F]

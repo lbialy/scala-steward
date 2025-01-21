@@ -33,7 +33,7 @@ class BitbucketApiAlg[F[_]](
     config: ForgeCfg,
     bitbucketCfg: BitbucketCfg,
     modify: Request[F] => F[Request[F]]
-)(implicit
+)(using
     client: HttpJsonClient[F],
     logger: Logger[F],
     F: MonadThrow[F]

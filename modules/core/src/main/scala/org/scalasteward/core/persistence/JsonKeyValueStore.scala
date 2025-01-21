@@ -25,7 +25,7 @@ import io.circe.{Decoder, Encoder, KeyEncoder}
 import org.scalasteward.core.io.{FileAlg, WorkspaceAlg}
 import org.typelevel.log4cats.Logger
 
-final class JsonKeyValueStore[F[_], K, V](storeRoot: File, name: String)(implicit
+final class JsonKeyValueStore[F[_], K, V](storeRoot: File, name: String)(using
     fileAlg: FileAlg[F],
     keyEncoder: KeyEncoder[K],
     logger: Logger[F],

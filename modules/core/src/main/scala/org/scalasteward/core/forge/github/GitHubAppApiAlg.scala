@@ -24,7 +24,7 @@ import org.typelevel.ci.*
 
 class GitHubAppApiAlg[F[_]](
     gitHubApiHost: Uri
-)(implicit
+)(using
     client: HttpJsonClient[F],
     F: Concurrent[F]
 ) {

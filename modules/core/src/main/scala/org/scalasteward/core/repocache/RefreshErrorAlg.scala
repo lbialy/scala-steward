@@ -31,7 +31,7 @@ import scala.util.control.NoStackTrace
 final class RefreshErrorAlg[F[_]](
     kvStore: KeyValueStore[F, Repo, Entry],
     backoffPeriod: FiniteDuration
-)(implicit
+)(using
     dateTimeAlg: DateTimeAlg[F],
     F: MonadThrow[F]
 ) {

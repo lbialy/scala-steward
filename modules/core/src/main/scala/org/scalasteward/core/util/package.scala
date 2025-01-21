@@ -63,7 +63,7 @@ package object util {
     *   res1: String = Hello, wo
     *   }}}
     */
-  def takeUntil[F[_], A, N](init: N, limit: N)(weight: A => N)(implicit
+  def takeUntil[F[_], A, N](init: N, limit: N)(weight: A => N)(using
       N: Numeric[N]
   ): Pipe[F, A, A] =
     if (N.gteq(init, limit))
@@ -76,7 +76,7 @@ package object util {
   /** A variant of `takeUntil` that takes an optional limit. This is the identity if `maybeLimit` is
     * `None`.
     */
-  def takeUntilMaybe[F[_], A, N](init: N, maybeLimit: Option[N])(weight: A => N)(implicit
+  def takeUntilMaybe[F[_], A, N](init: N, maybeLimit: Option[N])(weight: A => N)(using
       N: Numeric[N]
   ): Pipe[F, A, A] =
     maybeLimit match {

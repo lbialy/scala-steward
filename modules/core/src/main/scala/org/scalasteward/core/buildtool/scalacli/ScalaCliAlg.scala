@@ -49,7 +49,7 @@ object ScalaCliAlg {
     ).map(alias => s"//> using $alias ")
 }
 
-final class ScalaCliAlg[F[_]](implicit
+final class ScalaCliAlg[F[_]](using
     fileAlg: FileAlg[F],
     gitAlg: GitAlg[F],
     override protected val logger: Logger[F],

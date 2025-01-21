@@ -24,10 +24,10 @@ trait KeyValueStore[F[_], K, V] {
 
   def set(key: K, value: Option[V]): F[Unit]
 
-  final def getOrElse(key: K, default: => V)(implicit F: Functor[F]): F[V] =
+  final def getOrElse(key: K, default: => V)(using F: Functor[F]): F[V] =
     get(key).map(_.getOrElse(default))
 
-  final def modifyF(key: K)(f: Option[V] => F[Option[V]])(implicit F: FlatMap[F]): F[Option[V]] =
+  final def modifyF(key: K)(f: Option[V] => F[Option[V]])(using F: FlatMap[F]): F[Option[V]] =
     get(key).flatMap(f).flatTap(set(key, _))
 
   final def put(key: K, value: V): F[Unit] =

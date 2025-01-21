@@ -31,7 +31,7 @@ import org.typelevel.log4cats.Logger
 final class GitHubApiAlg[F[_]](
     gitHubApiHost: Uri,
     modify: Request[F] => F[Request[F]]
-)(implicit
+)(using
     client: HttpJsonClient[F],
     logger: Logger[F],
     F: MonadThrow[F]
